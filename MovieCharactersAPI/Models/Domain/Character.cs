@@ -5,9 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-
-namespace MovieCharactersAPI.Models
+namespace MovieCharactersAPI.Models.Domain
 {
     [Table("Character")]
     public class Character

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace MovieCharactersAPI.Models
+namespace MovieCharactersAPI.Models.Domain
 {
     [Table("Franchise")]
     public class Franchise

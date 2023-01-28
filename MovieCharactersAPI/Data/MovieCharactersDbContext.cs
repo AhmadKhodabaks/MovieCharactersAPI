@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Domain;
 using System.Collections.Generic;
 
 namespace MovieCharactersAPI.Data

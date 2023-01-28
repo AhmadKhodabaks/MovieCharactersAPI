@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace MovieCharactersAPI.Models
+namespace MovieCharactersAPI.Models.Domain
 {
     [Table("Movie")]
     public class Movie
