@@ -1,5 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using MovieCharactersAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
+IServiceCollection services = builder.Services;
+services.AddDbContext<MovieCharactersDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -8,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
