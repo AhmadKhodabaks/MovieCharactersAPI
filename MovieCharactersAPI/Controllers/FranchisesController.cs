@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Data;
 using MovieCharactersAPI.Models.Domain;
 
 namespace MovieCharactersAPI.Controllers

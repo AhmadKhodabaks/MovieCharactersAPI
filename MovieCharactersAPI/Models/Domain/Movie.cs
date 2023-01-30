@@ -41,6 +41,6 @@ namespace MovieCharactersAPI.Models.Domain
 
         //Navigation properties
         public Franchise Franchise { get; set; }
-        public ICollection<Character> Characters { get; set; }
+        public ICollection<Character>? Characters { get; set; }
     }
 }

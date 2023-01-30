@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Data;
 using MovieCharactersAPI.Models.Domain;
+using MovieCharactersAPI.Models.DTO.Movie;
 
 namespace MovieCharactersAPI.Controllers
 {
@@ -15,17 +18,19 @@ namespace MovieCharactersAPI.Controllers
     public class MoviesController : ControllerBase
     {
         private readonly MovieCharactersDbContext _context;
+        private readonly IMapper _mapper;
 
-        public MoviesController(MovieCharactersDbContext context)
+        public MoviesController(MovieCharactersDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
         {
-            return await _context.Movies.ToListAsync();
+            return _mapper.Map<List<MovieReadDTO>>(await _context.Movies.ToListAsync());
         }
 
         // GET: api/Movies/5

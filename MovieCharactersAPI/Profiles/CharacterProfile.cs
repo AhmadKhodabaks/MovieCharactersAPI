@@ -8,10 +8,11 @@ namespace MovieCharactersAPI.Profiles
     {
         public CharacterProfile()
         {
+            CreateMap<Character, CharacterReadDTO>()
+                .ForMember(cdto => cdto.MovieIds, opt => opt
+                .MapFrom(c => c.Movies.Select(c => c.MovieId).ToArray()));
             CreateMap<CharacterCreateDTO, Character>();
-            CreateMap<CharacterReadDTO, Character>();
             CreateMap<CharacterEditDTO, Character>();
-
         }
     }
 }

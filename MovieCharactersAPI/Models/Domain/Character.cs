@@ -26,11 +26,9 @@ namespace MovieCharactersAPI.Models.Domain
         public string PictureURL { get; set; }
 
         //Navigation Properties
-        public ICollection<Movie> Movies { get; set; }
+        public ICollection<Movie>? Movies { get; set; }
 
     }
-
-
     public enum Gender
     {
         Male,

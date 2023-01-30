@@ -4,7 +4,7 @@
 
 namespace MovieCharactersAPI.Migrations
 {
-    public partial class initialDb : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,30 +67,78 @@ namespace MovieCharactersAPI.Migrations
                 name: "CharacterMovie",
                 columns: table => new
                 {
-                    CharactersCharacterId = table.Column<int>(type: "int", nullable: false),
-                    MoviesMovieId = table.Column<int>(type: "int", nullable: false)
+                    CharacterId = table.Column<int>(type: "int", nullable: false),
+                    MovieId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterMovie", x => new { x.CharactersCharacterId, x.MoviesMovieId });
+                    table.PrimaryKey("PK_CharacterMovie", x => new { x.CharacterId, x.MovieId });
                     table.ForeignKey(
-                        name: "FK_CharacterMovie_Character_CharactersCharacterId",
-                        column: x => x.CharactersCharacterId,
+                        name: "FK_CharacterMovie_Character_CharacterId",
+                        column: x => x.CharacterId,
                         principalTable: "Character",
                         principalColumn: "CharacterId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CharacterMovie_Movie_MoviesMovieId",
-                        column: x => x.MoviesMovieId,
+                        name: "FK_CharacterMovie_Movie_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movie",
                         principalColumn: "MovieId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterMovie_MoviesMovieId",
+            migrationBuilder.InsertData(
+                table: "Character",
+                columns: new[] { "CharacterId", "Alias", "FullName", "Gender", "PictureURL" },
+                values: new object[,]
+                {
+                    { 1, "None", "FullName1", 0, "Not Given" },
+                    { 2, "None", "FullName2", 0, "Not Given" },
+                    { 3, "None", "FullName3", 0, "Not Given" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Franchise",
+                columns: new[] { "FranchiseId", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Description1", "Franchise1" },
+                    { 2, "Description2", "Franchise2" },
+                    { 3, "Description3", "Franchise3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Movie",
+                columns: new[] { "MovieId", "Director", "FranchiseId", "Genre", "PictureURL", "ReleaseYear", "Title", "TrailerURl" },
+                values: new object[] { 1, "Director1", 1, "Genre3", "", "2001", "Title1", "" });
+
+            migrationBuilder.InsertData(
+                table: "Movie",
+                columns: new[] { "MovieId", "Director", "FranchiseId", "Genre", "PictureURL", "ReleaseYear", "Title", "TrailerURl" },
+                values: new object[] { 2, "Director2", 2, "Genre2", "", "2002", "Title2", "" });
+
+            migrationBuilder.InsertData(
+                table: "Movie",
+                columns: new[] { "MovieId", "Director", "FranchiseId", "Genre", "PictureURL", "ReleaseYear", "Title", "TrailerURl" },
+                values: new object[] { 3, "Director3", 3, "Genre3", "", "2003", "Title3", "" });
+
+            migrationBuilder.InsertData(
                 table: "CharacterMovie",
-                column: "MoviesMovieId");
+                columns: new[] { "CharacterId", "MovieId" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 1, 3 },
+                    { 2, 2 },
+                    { 2, 3 },
+                    { 3, 3 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CharacterMovie_MovieId",
+                table: "CharacterMovie",
+                column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movie_FranchiseId",

@@ -12,5 +12,7 @@ namespace MovieCharactersAPI.Models.DTO.Movie
         public string PictureURL { get; set; }
         public string TrailerURl { get; set; }
         public int FranchiseId { get; set; }
+        public List<int>? CharacterIds { get; set; }
+
     }
 }

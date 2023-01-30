@@ -6,7 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Data;
 using MovieCharactersAPI.Models.Domain;
 using MovieCharactersAPI.Models.DTO.Character;
 
@@ -27,35 +27,40 @@ namespace MovieCharactersAPI.Controllers
 
         // GET: api/Characters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetCharacters()
+        public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetCharacters() //OK
         {
-            return _mapper.Map<List<CharacterReadDTO>>(await _context.Characters.ToListAsync());
+            return _mapper.Map<List<CharacterReadDTO>>(await _context.Characters
+                .Include(ch => ch.Movies)
+                .ToListAsync());
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CharacterReadDTO>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterReadDTO>> GetCharacter(int id) //OK
         {
-            var character = _mapper.Map<CharacterReadDTO>(await _context.Characters.FindAsync(id));
+            var characterDTO = _mapper.Map<CharacterReadDTO>(await _context.Characters
+                .Include(ch => ch.Movies)
+                .FirstOrDefaultAsync(ch => ch.CharacterId == id));
 
-            if (character == null)
+            if (characterDTO == null)
             {
                 return NotFound();
             }
 
-            return character;
+            return characterDTO;
         }
 
         // PUT: api/Characters/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, CharacterEditDTO character)
+        public async Task<ActionResult<CharacterEditDTO>> PutCharacter(int id, CharacterEditDTO characterDTO) //NOT MOVIES
         {
-            if (id != character.CharacterId)
+            if (id != characterDTO.CharacterId)
             {
                 return BadRequest();
             }
-            Character domainCharacter = _mapper.Map<Character>(character);
+
+            Character domainCharacter = _mapper.Map<Character>(characterDTO);
+
             _context.Entry(domainCharacter).State = EntityState.Modified;
 
             try
@@ -74,37 +79,41 @@ namespace MovieCharactersAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return characterDTO;
         }
 
         // POST: api/Characters
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<CharacterCreateDTO>> PostCharacter(CharacterCreateDTO character)
+        public async Task<ActionResult<Character>> PostCharacter(CharacterCreateDTO character) // NOT MOVIES
         {
             Character domainCharacter = _mapper.Map<Character>(character);
             _context.Characters.Add(domainCharacter);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCharacter", new { id = domainCharacter.CharacterId }, domainCharacter);
+            return CreatedAtAction("GetCharacter",
+                new { id = domainCharacter.CharacterId },
+                _mapper.Map<CharacterReadDTO>(domainCharacter));
         }
 
         // DELETE: api/Characters/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCharacter(int id)
+        public async Task<ActionResult<CharacterReadDTO>> DeleteCharacter(int id) //OK
         {
-            var character = await _context.Characters.FindAsync(id);
-            if (character == null)
+            var characterDomain = await _context.Characters
+               .Include(ch => ch.Movies)
+               .FirstOrDefaultAsync(ch => ch.CharacterId == id);
+
+            var characterDTO = _mapper.Map<CharacterReadDTO>(characterDomain);
+
+            if (characterDTO == null)
             {
                 return NotFound();
             }
-
-            _context.Characters.Remove(character);
+            _context.Characters.Remove(characterDomain);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return characterDTO;
         }
-
 
         private bool CharacterExists(int id)
         {

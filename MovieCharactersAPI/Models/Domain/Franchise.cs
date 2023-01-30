@@ -21,6 +21,6 @@ namespace MovieCharactersAPI.Models.Domain
         public string Description { get; set; }
 
         //Navigation property
-        public ICollection<Movie> Movies { get; set; }
+        public ICollection<Movie>? Movies { get; set; }
     }
 }

@@ -4,21 +4,21 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Data;
 
 #nullable disable
 
 namespace MovieCharactersAPI.Migrations
 {
     [DbContext(typeof(MovieCharactersDbContext))]
-    [Migration("20230128123755_seedDb")]
-    partial class seedDb
+    [Migration("20230130185657_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -56,12 +56,12 @@ namespace MovieCharactersAPI.Migrations
                         new
                         {
                             CharacterId = 2,
-                            MovieId = 1
+                            MovieId = 2
                         },
                         new
                         {
                             CharacterId = 2,
-                            MovieId = 2
+                            MovieId = 3
                         },
                         new
                         {
@@ -70,7 +70,7 @@ namespace MovieCharactersAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieCharactersAPI.Models.Character", b =>
+            modelBuilder.Entity("MovieCharactersAPI.Models.Domain.Character", b =>
                 {
                     b.Property<int>("CharacterId")
                         .ValueGeneratedOnAdd()
@@ -126,7 +126,7 @@ namespace MovieCharactersAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieCharactersAPI.Models.Franchise", b =>
+            modelBuilder.Entity("MovieCharactersAPI.Models.Domain.Franchise", b =>
                 {
                     b.Property<int>("FranchiseId")
                         .ValueGeneratedOnAdd()
@@ -169,7 +169,7 @@ namespace MovieCharactersAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieCharactersAPI.Models.Movie", b =>
+            modelBuilder.Entity("MovieCharactersAPI.Models.Domain.Movie", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
@@ -251,22 +251,22 @@ namespace MovieCharactersAPI.Migrations
 
             modelBuilder.Entity("CharacterMovie", b =>
                 {
-                    b.HasOne("MovieCharactersAPI.Models.Character", null)
+                    b.HasOne("MovieCharactersAPI.Models.Domain.Character", null)
                         .WithMany()
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieCharactersAPI.Models.Movie", null)
+                    b.HasOne("MovieCharactersAPI.Models.Domain.Movie", null)
                         .WithMany()
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MovieCharactersAPI.Models.Movie", b =>
+            modelBuilder.Entity("MovieCharactersAPI.Models.Domain.Movie", b =>
                 {
-                    b.HasOne("MovieCharactersAPI.Models.Franchise", "Franchise")
+                    b.HasOne("MovieCharactersAPI.Models.Domain.Franchise", "Franchise")
                         .WithMany("Movies")
                         .HasForeignKey("FranchiseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -275,7 +275,7 @@ namespace MovieCharactersAPI.Migrations
                     b.Navigation("Franchise");
                 });
 
-            modelBuilder.Entity("MovieCharactersAPI.Models.Franchise", b =>
+            modelBuilder.Entity("MovieCharactersAPI.Models.Domain.Franchise", b =>
                 {
                     b.Navigation("Movies");
                 });

@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using MovieCharactersAPI.Models;
+using MovieCharactersAPI.Models.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ services.AddDbContext<MovieCharactersDbContext>(option => option.UseSqlServer(bu
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddAutoMapper();
+builder.Services.AddAutoMapper(typeof(Program));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
