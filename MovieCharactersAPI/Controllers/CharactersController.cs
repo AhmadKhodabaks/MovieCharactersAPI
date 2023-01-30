@@ -29,14 +29,14 @@ namespace MovieCharactersAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetCharacters()
         {
-            return _mapper.Map<List<CharacterReadDTO>> (await _context.Characters.ToListAsync());
+            return _mapper.Map<List<CharacterReadDTO>>(await _context.Characters.ToListAsync());
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterReadDTO>> GetCharacter(int id)
         {
-            var character = await _context.Characters.FindAsync(id);
+            var character = _mapper.Map<CharacterReadDTO>(await _context.Characters.FindAsync(id));
 
             if (character == null)
             {
@@ -49,14 +49,14 @@ namespace MovieCharactersAPI.Controllers
         // PUT: api/Characters/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        public async Task<IActionResult> PutCharacter(int id, CharacterEditDTO character)
         {
             if (id != character.CharacterId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(character).State = EntityState.Modified;
+            Character domainCharacter = _mapper.Map<Character>(character);
+            _context.Entry(domainCharacter).State = EntityState.Modified;
 
             try
             {
@@ -80,12 +80,13 @@ namespace MovieCharactersAPI.Controllers
         // POST: api/Characters
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        public async Task<ActionResult<CharacterCreateDTO>> PostCharacter(CharacterCreateDTO character)
         {
-            _context.Characters.Add(character);
+            Character domainCharacter = _mapper.Map<Character>(character);
+            _context.Characters.Add(domainCharacter);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCharacter", new { id = character.CharacterId }, character);
+            return CreatedAtAction("GetCharacter", new { id = domainCharacter.CharacterId }, domainCharacter);
         }
 
         // DELETE: api/Characters/5
@@ -103,6 +104,7 @@ namespace MovieCharactersAPI.Controllers
 
             return NoContent();
         }
+
 
         private bool CharacterExists(int id)
         {
