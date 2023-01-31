@@ -11,7 +11,7 @@ using MovieCharactersAPI.Models.Data;
 namespace MovieCharactersAPI.Migrations
 {
     [DbContext(typeof(MovieCharactersDbContext))]
-    [Migration("20230130185657_test")]
+    [Migration("20230131120307_test")]
     partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
