@@ -8,9 +8,11 @@ namespace MovieCharactersAPI.Profiles
     {
         public FranchiseProfile()
         {
+            CreateMap<Franchise, FranchiseReadDTO>()
+                .ForMember(frDTO => frDTO.MovieIds, opt => opt
+                .MapFrom(fr => fr.Movies.Select(mv => mv.MovieId).ToArray()));
+            CreateMap<FranchiseEditDTO, Franchise>();
             CreateMap<FranchiseCreateDTO, Franchise>();
-            CreateMap<FranchiseEditDTO, Franchise>().ReverseMap();
-            CreateMap<FranchiseReadDTO, Franchise>();
         }
     }
 }
