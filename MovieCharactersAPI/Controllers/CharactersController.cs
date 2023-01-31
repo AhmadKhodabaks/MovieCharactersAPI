@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Models.Data;
 using MovieCharactersAPI.Models.Domain;
 using MovieCharactersAPI.Models.DTO.Character;
+using MovieCharactersAPI.Services.CharacterService;
+using NuGet.Protocol;
 
 namespace MovieCharactersAPI.Controllers
 {
@@ -16,12 +18,12 @@ namespace MovieCharactersAPI.Controllers
     [ApiController]
     public class CharactersController : ControllerBase
     {
-        private readonly MovieCharactersDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ICharacterService _characterService;
 
-        public CharactersController(MovieCharactersDbContext context, IMapper mapper)
+        public CharactersController(ICharacterService characterService, IMapper mapper)
         {
-            _context = context;
+            _characterService = characterService;
             _mapper = mapper;
         }
 
@@ -29,18 +31,14 @@ namespace MovieCharactersAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetCharacters() //OK
         {
-            return _mapper.Map<List<CharacterReadDTO>>(await _context.Characters
-                .Include(ch => ch.Movies)
-                .ToListAsync());
+            return _mapper.Map<List<CharacterReadDTO>>(await _characterService.GetCharactersAsync());
         }
 
         // GET: api/Characters/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterReadDTO>> GetCharacter(int id) //OK
         {
-            var characterDTO = _mapper.Map<CharacterReadDTO>(await _context.Characters
-                .Include(ch => ch.Movies)
-                .FirstOrDefaultAsync(ch => ch.CharacterId == id));
+            var characterDTO = _mapper.Map<CharacterReadDTO>(await _characterService.GetCharacterByIdAsync(id));
 
             if (characterDTO == null)
             {
@@ -52,72 +50,50 @@ namespace MovieCharactersAPI.Controllers
 
         // PUT: api/Characters/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<CharacterEditDTO>> PutCharacter(int id, CharacterEditDTO characterDTO) //NOT MOVIES
+        public async Task<IActionResult> PutCharacter(int id, CharacterEditDTO characterDTO) //Ok
         {
             if (id != characterDTO.CharacterId)
             {
                 return BadRequest();
             }
+            if (!_characterService.CharacterExists(id))
+            {
+                return NotFound();
+            }
 
             Character domainCharacter = _mapper.Map<Character>(characterDTO);
 
-            _context.Entry(domainCharacter).State = EntityState.Modified;
+            await _characterService.UpdateCharacterAsync(domainCharacter);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CharacterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return characterDTO;
+            return NoContent();
         }
+
 
         // POST: api/Characters
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(CharacterCreateDTO character) // NOT MOVIES
+        public async Task<IActionResult> PostCharacter(CharacterCreateDTO characterDTO) //not ok
         {
-            Character domainCharacter = _mapper.Map<Character>(character);
-            _context.Characters.Add(domainCharacter);
-            await _context.SaveChangesAsync();
+            Character domainCharacter = _mapper.Map<Character>(characterDTO);
+
+            domainCharacter = await _characterService.AddCharacterAsync(domainCharacter);
 
             return CreatedAtAction("GetCharacter",
                 new { id = domainCharacter.CharacterId },
-                _mapper.Map<CharacterReadDTO>(domainCharacter));
+                _mapper.Map<CharacterCreateDTO>(domainCharacter));
         }
 
         // DELETE: api/Characters/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CharacterReadDTO>> DeleteCharacter(int id) //OK
+        public async Task<IActionResult> DeleteCharacter(int id) //OK
         {
-            var characterDomain = await _context.Characters
-               .Include(ch => ch.Movies)
-               .FirstOrDefaultAsync(ch => ch.CharacterId == id);
-
-            var characterDTO = _mapper.Map<CharacterReadDTO>(characterDomain);
-
-            if (characterDTO == null)
+            if (!_characterService.CharacterExists(id))
             {
                 return NotFound();
             }
-            _context.Characters.Remove(characterDomain);
-            await _context.SaveChangesAsync();
 
-            return characterDTO;
+            await _characterService.DeleteCharacterAsync(id);
+            return NoContent();
         }
 
-        private bool CharacterExists(int id)
-        {
-            return _context.Characters.Any(e => e.CharacterId == id);
-        }
     }
 }
