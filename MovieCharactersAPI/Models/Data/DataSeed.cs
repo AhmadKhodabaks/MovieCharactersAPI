@@ -3,8 +3,15 @@ using MovieCharactersAPI.Models.Domain;
 
 namespace MovieCharactersAPI.Models.Data
 {
+    /// <summary>
+    /// A class for createing objects - Characters, Movies, Franchises that are seeded to the database.
+    /// </summary>
     public class DataSeed
     {
+        /// <summary>
+        /// Characters.
+        /// </summary>
+        /// <returns></returns>
         public static List<Character> GetCharacters()
         {
             List<Character> characters = new List<Character>()
@@ -15,6 +22,10 @@ namespace MovieCharactersAPI.Models.Data
             };
             return characters;
         }
+        /// <summary>
+        /// Movies.
+        /// </summary>
+        /// <returns></returns>
         public static List<Movie> GetMovies()
         {
             List<Movie> movies = new List<Movie>()
@@ -56,6 +67,10 @@ namespace MovieCharactersAPI.Models.Data
             return movies;
         }
 
+        /// <summary>
+        /// Franchises.
+        /// </summary>
+        /// <returns></returns>
         public static List<Franchise> GetFranchises()
         {
             List<Franchise> franchises = new List<Franchise>()

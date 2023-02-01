@@ -1,5 +1,8 @@
 ﻿namespace MovieCharactersAPI.Models.DTO.Movie
 {
+    /// <summary>
+    /// Data transfer object for Movie creation.
+    /// </summary>
     public class MovieCreateDTO
     {
         public string Title { get; set; }

@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace MovieCharactersAPI.Models.Domain
 {
+    /// <summary>
+    /// Domain class for Characters.
+    /// Defining Characters parameters, navigation properties
+    /// and their constraints that will be generated as columns in the Character table.
+    /// </summary>
     [Table("Character")]
     public class Character
     {

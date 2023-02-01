@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 
 namespace MovieCharactersAPI.Models.Domain
 {
+    /// <summary>
+    /// Domain class for Movies.
+    /// Defining Movie parameters, foreign keys, navigation properties
+    /// and their constraints that will be generated as columns in the Movie table.
+    /// </summary>
     [Table("Movie")]
     public class Movie
     {

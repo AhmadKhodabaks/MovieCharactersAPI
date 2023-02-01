@@ -2,6 +2,10 @@
 
 namespace MovieCharactersAPI.Services.FranchiseService
 {
+    /// <summary>
+    /// Implements IService interfice with Franchise type.
+    /// Defines specific methods for Franchise Service.
+    /// </summary>
     public interface IFranchiseService : IService<Franchise>
     {
         public Task UpdateMovies(int id, List<int> movieIds);

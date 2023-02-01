@@ -1,5 +1,8 @@
 ﻿namespace MovieCharactersAPI.Models.DTO.Movie
 {
+    /// <summary>
+    /// Data transfer object for Movie editing.
+    /// </summary>
     public class MovieEditDTO
     {
         public int MovieId { get; set; }

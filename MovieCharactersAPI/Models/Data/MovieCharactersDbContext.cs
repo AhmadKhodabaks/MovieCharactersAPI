@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace MovieCharactersAPI.Models.Data
 {
+    /// <summary>
+    /// Database context class for creating Database sets and seeding data to the database.
+    /// </summary>
     public class MovieCharactersDbContext : DbContext
     {
         public DbSet<Character> Characters { get; set; }

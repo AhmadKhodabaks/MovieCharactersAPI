@@ -1,5 +1,8 @@
 ﻿namespace MovieCharactersAPI.Models.DTO.Franchise
 {
+    /// <summary>
+    /// Data transfer object for Franchise reading.
+    /// </summary>
     public class FranchiseReadDTO
     {
         public int FranchiseId { get; set; }

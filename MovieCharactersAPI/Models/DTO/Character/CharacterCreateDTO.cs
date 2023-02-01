@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MovieCharactersAPI.Models.DTO.Character
 {
+    /// <summary>
+    /// Data transfer object for Character creation.
+    /// </summary>
     public class CharacterCreateDTO
     {
         public string FullName { get; set; }

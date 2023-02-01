@@ -2,6 +2,11 @@
 
 namespace MovieCharactersAPI.Services
 {
+    /// <summary>
+    /// Generic Interface for Services.
+    /// Defines methods that are used in all Services.W
+    /// </summary>
+    /// <typeparam name="T">Used as any Domain type.</typeparam>
     public interface IService<T>
     {
         public Task<IEnumerable<T>> GetAllAsync();

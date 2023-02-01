@@ -2,6 +2,9 @@
 
 namespace MovieCharactersAPI.Models.DTO.Character
 {
+    /// <summary>
+    /// Data transfer object for Character reading.
+    /// </summary>
     public class CharacterReadDTO
     {
         public string FullName { get; set; }
