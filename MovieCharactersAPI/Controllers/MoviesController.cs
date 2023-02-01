@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Models.Data;
 using MovieCharactersAPI.Models.Domain;
+using MovieCharactersAPI.Models.DTO.Character;
 using MovieCharactersAPI.Models.DTO.Movie;
 using MovieCharactersAPI.Services.MovieService;
 
@@ -31,19 +32,31 @@ namespace MovieCharactersAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
         {
-            return _mapper.Map<List<MovieReadDTO>>(await _movieService.GetMoviesAsync());
+            return _mapper.Map<List<MovieReadDTO>>(await _movieService.GetAllAsync());
+        }
+
+        // GET: api/Movies/Characters/MovieId
+        [HttpGet("Characters/{id}")]
+        public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetMovies(int id)
+        {
+            if (!_movieService.EntityExists(id))
+            {
+                return NotFound();
+            }
+
+            return _mapper.Map<List<CharacterReadDTO>>(await _movieService.GetAllCharacters(id));
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieReadDTO>> GetMovie(int id)
         {
-            var movieDTO = _mapper.Map<MovieReadDTO>(await _movieService.GetMovieByIdAsync(id));
-
-            if (movieDTO == null)
+            if (!_movieService.EntityExists(id))
             {
                 return NotFound();
             }
+
+            var movieDTO = _mapper.Map<MovieReadDTO>(await _movieService.GetEntityByIdAsync(id));
 
             return movieDTO;
         }
@@ -56,12 +69,27 @@ namespace MovieCharactersAPI.Controllers
             {
                 return BadRequest();
             }
-            if (!_movieService.MovieExists(id))
+            if (!_movieService.EntityExists(id))
             {
                 return NotFound();
             }
+
             Movie domainMovie = _mapper.Map<Movie>(movieDTO);
-            await _movieService.UpdateMovieAsync(domainMovie);
+            await _movieService.UpdateEntityAsync(domainMovie);
+
+            return NoContent();
+        }
+
+        // PUT: api/Movies/Characters/5
+        [HttpPut("Characters/{id}")]
+        public async Task<IActionResult> PutCharacters(int id, List<int> characterIds)
+        {
+            if (!_movieService.EntityExists(id))
+            {
+                return NotFound();
+            }
+
+            await _movieService.UpdateCharactersAsync(id, characterIds);
 
             return NoContent();
         }
@@ -72,7 +100,7 @@ namespace MovieCharactersAPI.Controllers
         public async Task<ActionResult<MovieReadDTO>> PostMovie(MovieCreateDTO movieDTO)
         {
             Movie domainMovie = _mapper.Map<Movie>(movieDTO);
-            await _movieService.AddMovieAsync(domainMovie);
+            await _movieService.AddEntityAsync(domainMovie);
 
             return CreatedAtAction("GetMovie", new { id = domainMovie.MovieId }, _mapper.Map<MovieReadDTO>(domainMovie));
         }
@@ -81,11 +109,11 @@ namespace MovieCharactersAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
-            if (!_movieService.MovieExists(id))
+            if (!_movieService.EntityExists(id))
             {
                 return NotFound();
             }
-            await _movieService.DeleteMovieAsync(id);
+            await _movieService.DeleteEntityAsync(id);
 
             return NoContent();
         }

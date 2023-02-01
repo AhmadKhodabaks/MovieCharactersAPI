@@ -9,6 +9,5 @@ namespace MovieCharactersAPI.Models.DTO.Character
         public Gender Gender { get; set; }
         public string PictureURL { get; set; }
         public List<int>? MovieIds { get; set; }
-
     }
 }

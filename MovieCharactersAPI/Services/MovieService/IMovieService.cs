@@ -2,13 +2,9 @@
 
 namespace MovieCharactersAPI.Services.MovieService
 {
-    public interface IMovieService
+    public interface IMovieService : IService<Movie>
     {
-        public Task<IEnumerable<Movie>> GetMoviesAsync();
-        public Task<Movie> GetMovieByIdAsync(int id);
-        public Task<Movie> AddMovieAsync(Movie movie);
-        public Task UpdateMovieAsync(Movie movie);
-        public Task DeleteMovieAsync(int id);
-        public bool MovieExists(int id);
+        public Task UpdateCharactersAsync(int id, List<int> characterIds);
+        public Task<IEnumerable<Character>> GetAllCharacters(int id);
     }
 }

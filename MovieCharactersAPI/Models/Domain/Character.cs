@@ -27,7 +27,6 @@ namespace MovieCharactersAPI.Models.Domain
 
         //Navigation Properties
         public ICollection<Movie>? Movies { get; set; }
-
     }
     public enum Gender
     {

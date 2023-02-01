@@ -2,13 +2,9 @@
 
 namespace MovieCharactersAPI.Services.FranchiseService
 {
-    public interface IFranchiseService
+    public interface IFranchiseService : IService<Franchise>
     {
-        public Task<IEnumerable<Franchise>> GetFranchisesAsync();
-        public Task<Franchise> GetFranchiseByIdAsync(int id);
-        public Task<Franchise> AddFranchiseAsync(Franchise franchise);
-        public Task UpdateFranchiseAsync(Franchise franchise);
-        public Task DeleteFranchiseAsync(int id);
-        public bool FranchiseExists(int id);
+        public Task UpdateMovies(int id, List<int> movieIds);
+        public Task<IEnumerable<Character>> GetAllCharacters(int id);
     }
 }
