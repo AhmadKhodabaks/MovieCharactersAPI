@@ -16,6 +16,8 @@ namespace MovieCharactersAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("Application/json")]
+    [Consumes("Application/json")]
     public class FranchisesController : ControllerBase
     {
         private readonly IFranchiseService _franchiseService;
@@ -27,15 +29,23 @@ namespace MovieCharactersAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Franchises
+        /// <summary>
+        /// Get all Franchises.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FranchiseReadDTO>>> GetFranchises()
         {
             return _mapper.Map<List<FranchiseReadDTO>>(await _franchiseService.GetAllAsync());
         }
 
+        /// <summary>
+        /// Get a Character list of a Franchise.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("Characters/{id}")]
-        public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetFranchises(int id)
+        public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetFranchiseCharacters(int id)
         {
             if (!_franchiseService.EntityExists(id))
             {
@@ -45,7 +55,11 @@ namespace MovieCharactersAPI.Controllers
             return _mapper.Map<List<CharacterReadDTO>>(await _franchiseService.GetAllCharacters(id));
         }
 
-        // GET: api/Franchises/5
+        /// <summary>
+        /// Get a Franchise with given Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<FranchiseReadDTO>> GetFranchise(int id)
         {
@@ -59,7 +73,12 @@ namespace MovieCharactersAPI.Controllers
             return franchiseDTO;
         }
 
-        // PUT: api/Franchises/5
+        /// <summary>
+        /// Update a Franchise with given Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="franchiseDTO"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, FranchiseEditDTO franchiseDTO)
         {
@@ -79,9 +98,14 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
-        // PUT: api/Franchises/Movies/5
+        /// <summary>
+        /// Update the Movie list of a Franchise.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movieIds"></param>
+        /// <returns></returns>
         [HttpPut("Movies/{id}")]
-        public async Task<IActionResult> PutMoviesInFranchise(int id, List<int> movieIds)
+        public async Task<IActionResult> PutFranchiseMovies(int id, List<int> movieIds)
         {
             if (!_franchiseService.EntityExists(id))
             {
@@ -92,8 +116,11 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Franchises
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Create a new Franchise.
+        /// </summary>
+        /// <param name="franchiseDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<FranchiseReadDTO>> PostFranchise(FranchiseCreateDTO franchiseDTO)
         {
@@ -104,7 +131,11 @@ namespace MovieCharactersAPI.Controllers
             return CreatedAtAction("GetFranchise", new { id = domainFranchise.FranchiseId }, _mapper.Map<FranchiseReadDTO>(domainFranchise));
         }
 
-        // DELETE: api/Franchises/5
+        /// <summary>
+        /// Delete an exsiting Franchise.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {

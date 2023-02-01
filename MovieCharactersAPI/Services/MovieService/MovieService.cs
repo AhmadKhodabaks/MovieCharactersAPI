@@ -77,6 +77,7 @@ namespace MovieCharactersAPI.Services.MovieService
             var movieCharacters = await _context.Movies
                 .Where(mv => mv.MovieId == id)
                 .SelectMany(mv => mv.Characters)
+                .Include(ch => ch.Movies)
                 .ToListAsync();
 
             return movieCharacters;

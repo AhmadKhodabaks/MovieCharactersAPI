@@ -17,6 +17,8 @@ namespace MovieCharactersAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("Application/json")]
+    [Consumes("Application/json")]
     public class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
@@ -28,16 +30,23 @@ namespace MovieCharactersAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/Movies
+        /// <summary>
+        /// Get all Movies.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
         {
             return _mapper.Map<List<MovieReadDTO>>(await _movieService.GetAllAsync());
         }
 
-        // GET: api/Movies/Characters/MovieId
+        /// <summary>
+        /// Get a Character list of a Movie.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("Characters/{id}")]
-        public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetMovies(int id)
+        public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetMovieCharacters(int id)
         {
             if (!_movieService.EntityExists(id))
             {
@@ -47,7 +56,11 @@ namespace MovieCharactersAPI.Controllers
             return _mapper.Map<List<CharacterReadDTO>>(await _movieService.GetAllCharacters(id));
         }
 
-        // GET: api/Movies/5
+        /// <summary>
+        /// Get a Movie with given Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieReadDTO>> GetMovie(int id)
         {
@@ -61,7 +74,12 @@ namespace MovieCharactersAPI.Controllers
             return movieDTO;
         }
 
-        // PUT: api/Movies/5
+        /// <summary>
+        /// Update a movie with given Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movieDTO"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id, MovieEditDTO movieDTO)
         {
@@ -80,9 +98,14 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
-        // PUT: api/Movies/Characters/5
+        /// <summary>
+        /// Update Character list of a Movie.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="characterIds"></param>
+        /// <returns></returns>
         [HttpPut("Characters/{id}")]
-        public async Task<IActionResult> PutCharacters(int id, List<int> characterIds)
+        public async Task<IActionResult> PutMovieCharacters(int id, List<int> characterIds)
         {
             if (!_movieService.EntityExists(id))
             {
@@ -94,8 +117,11 @@ namespace MovieCharactersAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Movies
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Create a new Movie.
+        /// </summary>
+        /// <param name="movieDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<MovieReadDTO>> PostMovie(MovieCreateDTO movieDTO)
         {
@@ -105,7 +131,11 @@ namespace MovieCharactersAPI.Controllers
             return CreatedAtAction("GetMovie", new { id = domainMovie.MovieId }, _mapper.Map<MovieReadDTO>(domainMovie));
         }
 
-        // DELETE: api/Movies/5
+        /// <summary>
+        /// Delete an existing Movie.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
