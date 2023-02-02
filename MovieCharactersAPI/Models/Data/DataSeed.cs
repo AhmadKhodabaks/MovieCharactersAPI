@@ -16,9 +16,9 @@ namespace MovieCharactersAPI.Models.Data
         {
             List<Character> characters = new List<Character>()
             {
-                new Character { CharacterId = 1, FullName = "FullName1", Alias = "None", Gender = Gender.Male, PictureURL = "Not Given" },
-                new Character { CharacterId = 2, FullName = "FullName2", Alias = "None", Gender = Gender.Male, PictureURL = "Not Given" },
-                new Character { CharacterId = 3, FullName = "FullName3", Alias = "None", Gender = Gender.Male, PictureURL = "Not Given" }
+                new Character { CharacterId = 1, FullName = "FullName1", Alias = "None", Gender = "Male", PictureURL = "Not Given" },
+                new Character { CharacterId = 2, FullName = "FullName2", Alias = "None", Gender = "Male", PictureURL = "Not Given" },
+                new Character { CharacterId = 3, FullName = "FullName3", Alias = "None", Gender = "Female", PictureURL = "Not Given" }
             };
             return characters;
         }

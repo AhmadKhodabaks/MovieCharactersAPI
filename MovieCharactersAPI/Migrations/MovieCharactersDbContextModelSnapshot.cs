@@ -77,7 +77,6 @@ namespace MovieCharactersAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CharacterId"), 1L, 1);
 
                     b.Property<string>("Alias")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -86,11 +85,11 @@ namespace MovieCharactersAPI.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PictureURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CharacterId");
@@ -103,7 +102,7 @@ namespace MovieCharactersAPI.Migrations
                             CharacterId = 1,
                             Alias = "None",
                             FullName = "FullName1",
-                            Gender = 0,
+                            Gender = "Male",
                             PictureURL = "Not Given"
                         },
                         new
@@ -111,7 +110,7 @@ namespace MovieCharactersAPI.Migrations
                             CharacterId = 2,
                             Alias = "None",
                             FullName = "FullName2",
-                            Gender = 0,
+                            Gender = "Male",
                             PictureURL = "Not Given"
                         },
                         new
@@ -119,7 +118,7 @@ namespace MovieCharactersAPI.Migrations
                             CharacterId = 3,
                             Alias = "None",
                             FullName = "FullName3",
-                            Gender = 0,
+                            Gender = "Female",
                             PictureURL = "Not Given"
                         });
                 });
@@ -133,7 +132,6 @@ namespace MovieCharactersAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FranchiseId"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -189,7 +187,6 @@ namespace MovieCharactersAPI.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("PictureURL")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReleaseYear")
@@ -202,7 +199,6 @@ namespace MovieCharactersAPI.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TrailerURl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MovieId");

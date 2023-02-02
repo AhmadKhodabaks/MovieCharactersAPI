@@ -15,9 +15,9 @@ namespace MovieCharactersAPI.Migrations
                     CharacterId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    PictureURL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Alias = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PictureURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,7 +31,7 @@ namespace MovieCharactersAPI.Migrations
                     FranchiseId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,8 +48,8 @@ namespace MovieCharactersAPI.Migrations
                     Genre = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ReleaseYear = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Director = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    PictureURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrailerURl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PictureURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrailerURl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FranchiseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -92,9 +92,9 @@ namespace MovieCharactersAPI.Migrations
                 columns: new[] { "CharacterId", "Alias", "FullName", "Gender", "PictureURL" },
                 values: new object[,]
                 {
-                    { 1, "None", "FullName1", 0, "Not Given" },
-                    { 2, "None", "FullName2", 0, "Not Given" },
-                    { 3, "None", "FullName3", 0, "Not Given" }
+                    { 1, "None", "FullName1", "Male", "Not Given" },
+                    { 2, "None", "FullName2", "Male", "Not Given" },
+                    { 3, "None", "FullName3", "Female", "Not Given" }
                 });
 
             migrationBuilder.InsertData(

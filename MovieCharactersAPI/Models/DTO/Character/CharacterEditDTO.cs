@@ -10,8 +10,8 @@ namespace MovieCharactersAPI.Models.DTO.Character
     {
         public int CharacterId { get; set; }
         public string FullName { get; set; }
-        public string Alias { get; set; }
-        public Gender Gender { get; set; }
-        public string PictureURL { get; set; }
+        public string? Alias { get; set; }
+        public string Gender { get; set; }
+        public string? PictureURL { get; set; }
     }
 }

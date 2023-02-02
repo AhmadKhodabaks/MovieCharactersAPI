@@ -16,6 +16,7 @@ namespace MovieCharactersAPI.Models.Domain
     [Table("Franchise")]
     public class Franchise
     {
+        //PK
         public int FranchiseId { get; set; }
 
         [Required]
@@ -23,7 +24,7 @@ namespace MovieCharactersAPI.Models.Domain
         public string Name { get; set; }
 
         [MaxLength(30)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         //Navigation property
         public ICollection<Movie>? Movies { get; set; }

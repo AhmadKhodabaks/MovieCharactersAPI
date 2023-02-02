@@ -8,20 +8,21 @@ using MovieCharactersAPI.Services.MovieService;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-IServiceCollection services = builder.Services;
-
+//Builder service uses the connection string to make a connection with the database.
 builder.Services.AddDbContext<MovieCharactersDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(Program));
+
+//Dependecny injection.
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IFranchiseService, FranchiseService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+//Swagger documentary
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {

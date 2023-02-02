@@ -15,6 +15,7 @@ namespace MovieCharactersAPI.Models.Domain
     [Table("Character")]
     public class Character
     {
+        //PK
         public int CharacterId { get; set; }
 
         [Required]
@@ -22,20 +23,17 @@ namespace MovieCharactersAPI.Models.Domain
         public string FullName { get; set; }
 
         [MaxLength(50)]
-        public string Alias { get; set; }
+        public string? Alias { get; set; }
 
         [Required]
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
 
         [Url]
-        public string PictureURL { get; set; }
+        public string? PictureURL { get; set; }
 
         //Navigation Properties
         public ICollection<Movie>? Movies { get; set; }
     }
-    public enum Gender
-    {
-        Male,
-        Female
-    }
+
+
 }

@@ -18,6 +18,7 @@ namespace MovieCharactersAPI.Models.Domain
     [Table("Movie")]
     public class Movie
     {
+        //PK
         public int MovieId { get; set; }
 
         [Required]
@@ -36,10 +37,10 @@ namespace MovieCharactersAPI.Models.Domain
         public string Director { get; set; }
 
         [Url]
-        public string PictureURL { get; set; }
+        public string? PictureURL { get; set; }
 
         [Url]
-        public string TrailerURl { get; set; }
+        public string? TrailerURl { get; set; }
 
         //Foreign keys
         public int FranchiseId { get; set; }
