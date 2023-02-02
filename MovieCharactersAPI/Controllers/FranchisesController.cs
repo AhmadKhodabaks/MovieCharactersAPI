@@ -105,7 +105,7 @@ namespace MovieCharactersAPI.Controllers
         /// <param name="movieIds"></param>
         /// <returns></returns>
         [HttpPut("Movies/{id}")]
-        public async Task<IActionResult> PutFranchiseMovies(int id, List<int> movieIds)
+        public async Task<ActionResult<FranchiseReadDTO>> PutFranchiseMovies(int id, List<int> movieIds)
         {
             if (!_franchiseService.EntityExists(id))
             {
@@ -113,7 +113,7 @@ namespace MovieCharactersAPI.Controllers
             }
             await _franchiseService.UpdateMovies(id, movieIds);
 
-            return NoContent();
+            return _mapper.Map<FranchiseReadDTO>(await _franchiseService.GetEntityByIdAsync(id));
         }
 
         /// <summary>

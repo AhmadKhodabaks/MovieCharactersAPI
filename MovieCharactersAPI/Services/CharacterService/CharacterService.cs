@@ -106,12 +106,15 @@ namespace MovieCharactersAPI.Services.CharacterService
                 .Where(ch => ch.CharacterId == id)
                 .FirstOrDefaultAsync();
 
-            List<Movie> movies = new List<Movie>();
+            List<Movie> movies = characterToUpdateMovies.Movies.ToList();
 
             foreach (var movieId in movieIds)
             {
                 Movie movie = await _context.Movies.FindAsync(movieId);
-                movies.Add(movie);
+                if (!movies.Contains(movie))
+                {
+                    movies.Add(movie);
+                }
             }
 
             characterToUpdateMovies.Movies = movies;

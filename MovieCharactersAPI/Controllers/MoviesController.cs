@@ -105,7 +105,7 @@ namespace MovieCharactersAPI.Controllers
         /// <param name="characterIds"></param>
         /// <returns></returns>
         [HttpPut("Characters/{id}")]
-        public async Task<IActionResult> PutMovieCharacters(int id, List<int> characterIds)
+        public async Task<ActionResult<MovieReadDTO>> PutMovieCharacters(int id, List<int> characterIds)
         {
             if (!_movieService.EntityExists(id))
             {
@@ -114,7 +114,7 @@ namespace MovieCharactersAPI.Controllers
 
             await _movieService.UpdateCharactersAsync(id, characterIds);
 
-            return NoContent();
+            return _mapper.Map<MovieReadDTO>(await _movieService.GetEntityByIdAsync(id));
         }
 
         /// <summary>
