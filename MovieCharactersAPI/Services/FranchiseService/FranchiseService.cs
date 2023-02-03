@@ -37,7 +37,10 @@ namespace MovieCharactersAPI.Services.FranchiseService
         /// <returns></returns>
         public async Task DeleteEntityAsync(int id)
         {
-            var franchise = await _context.Franchises.Include(fr => fr.Movies).Where(fr => fr.FranchiseId == id).FirstAsync();
+            var franchise = await _context.Franchises
+                .Include(fr => fr.Movies)
+                .Where(fr => fr.FranchiseId == id)
+                .FirstAsync();
 
             //Setting FranchsieId to 0 for every movie in this Franchise before deleting it.
             List<Movie> franchiseMovies = franchise.Movies.ToList();

@@ -12,8 +12,8 @@ using MovieCharactersAPI.Models.Data;
 namespace MovieCharactersAPI.Migrations
 {
     [DbContext(typeof(MovieCharactersDbContext))]
-    [Migration("20230203121944_test")]
-    partial class test
+    [Migration("20230203145250_initialDbWithSeeding")]
+    partial class initialDbWithSeeding
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

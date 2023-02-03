@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieCharactersAPI.Models.Data;
 using MovieCharactersAPI.Models.Domain;
 using MovieCharactersAPI.Models.DTO.Character;
+using MovieCharactersAPI.Models.DTO.Franchise;
 using MovieCharactersAPI.Models.DTO.Movie;
 using MovieCharactersAPI.Services.CharacterService;
 using NuGet.Protocol;
@@ -47,6 +48,7 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("Movies/{id}")]
         public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetCharacterMovies(int id) //OK
         {
@@ -63,6 +65,7 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<CharacterReadDTO>> GetCharacter(int id) //OK
         {
@@ -82,8 +85,10 @@ namespace MovieCharactersAPI.Controllers
         /// <param name="id"></param>
         /// <param name="characterDTO"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, CharacterEditDTO characterDTO) //Ok
+        public async Task<ActionResult<CharacterReadDTO>> PutCharacter(int id, CharacterEditDTO characterDTO) //Ok
         {
             if (id != characterDTO.CharacterId)
             {
@@ -97,7 +102,7 @@ namespace MovieCharactersAPI.Controllers
             Character domainCharacter = _mapper.Map<Character>(characterDTO);
             await _characterService.UpdateEntityAsync(domainCharacter);
 
-            return NoContent();
+            return _mapper.Map<CharacterReadDTO>(await _characterService.GetEntityByIdAsync(id));
         }
 
         /// <summary>
@@ -106,6 +111,7 @@ namespace MovieCharactersAPI.Controllers
         /// <param name="id"></param>
         /// <param name="movieIds"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("Movies/{id}")]
         public async Task<ActionResult<CharacterReadDTO>> PutCharacterMovies(int id, List<int> movieIds) //Ok
         {
@@ -142,6 +148,8 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id) //OK
         {
@@ -151,7 +159,7 @@ namespace MovieCharactersAPI.Controllers
             }
 
             await _characterService.DeleteEntityAsync(id);
-            return NoContent();
+            return Ok();
         }
     }
 }

@@ -4,7 +4,7 @@
 
 namespace MovieCharactersAPI.Migrations
 {
-    public partial class test : Migration
+    public partial class initialDbWithSeeding : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

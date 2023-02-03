@@ -45,6 +45,7 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("Characters/{id}")]
         public async Task<ActionResult<IEnumerable<CharacterReadDTO>>> GetMovieCharacters(int id)
         {
@@ -61,6 +62,7 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieReadDTO>> GetMovie(int id)
         {
@@ -80,8 +82,10 @@ namespace MovieCharactersAPI.Controllers
         /// <param name="id"></param>
         /// <param name="movieDTO"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(int id, MovieEditDTO movieDTO)
+        public async Task<ActionResult<MovieReadDTO>> PutMovie(int id, MovieEditDTO movieDTO)
         {
             if (id != movieDTO.MovieId)
             {
@@ -95,7 +99,7 @@ namespace MovieCharactersAPI.Controllers
             Movie domainMovie = _mapper.Map<Movie>(movieDTO);
             await _movieService.UpdateEntityAsync(domainMovie);
 
-            return NoContent();
+            return _mapper.Map<MovieReadDTO>(await _movieService.GetEntityByIdAsync(id)); ;
         }
 
         /// <summary>
@@ -104,6 +108,7 @@ namespace MovieCharactersAPI.Controllers
         /// <param name="id"></param>
         /// <param name="characterIds"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("Characters/{id}")]
         public async Task<ActionResult<MovieReadDTO>> PutMovieCharacters(int id, List<int> characterIds)
         {
@@ -122,6 +127,7 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="movieDTO"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost]
         public async Task<ActionResult<MovieReadDTO>> PostMovie(MovieCreateDTO movieDTO)
         {
@@ -136,8 +142,9 @@ namespace MovieCharactersAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMovie(int id)
+        public async Task<ActionResult<MovieReadDTO>> DeleteMovie(int id)
         {
             if (!_movieService.EntityExists(id))
             {
@@ -145,7 +152,7 @@ namespace MovieCharactersAPI.Controllers
             }
             await _movieService.DeleteEntityAsync(id);
 
-            return NoContent();
+            return Ok();
         }
     }
 }
