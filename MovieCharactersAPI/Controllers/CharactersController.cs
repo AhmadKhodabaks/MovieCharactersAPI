@@ -43,7 +43,7 @@ namespace MovieCharactersAPI.Controllers
         }
 
         /// <summary>
-        /// Get a movie list of a Character.
+        /// Get a movie list of a Character with given Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -101,7 +101,7 @@ namespace MovieCharactersAPI.Controllers
         }
 
         /// <summary>
-        /// Update the movie list of a Character.
+        /// Update the movie list of a Character with given Id.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="movieIds"></param>
@@ -138,7 +138,7 @@ namespace MovieCharactersAPI.Controllers
         }
 
         /// <summary>
-        /// Delete an existing Character.
+        /// Delete an existing Character with given Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

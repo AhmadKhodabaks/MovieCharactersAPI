@@ -7,6 +7,7 @@ namespace MovieCharactersAPI.Models.DTO.Character
     /// </summary>
     public class CharacterReadDTO
     {
+        public int CharacterId { get; set; }
         public string FullName { get; set; }
         public string? Alias { get; set; }
         public string Gender { get; set; }

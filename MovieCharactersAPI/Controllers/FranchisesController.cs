@@ -40,7 +40,7 @@ namespace MovieCharactersAPI.Controllers
         }
 
         /// <summary>
-        /// Get a Character list of a Franchise.
+        /// Get a Character list of a Franchise with given Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -99,7 +99,7 @@ namespace MovieCharactersAPI.Controllers
         }
 
         /// <summary>
-        /// Update the Movie list of a Franchise.
+        /// Update the Movie list of a Franchise with given Id.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="movieIds"></param>
@@ -132,7 +132,7 @@ namespace MovieCharactersAPI.Controllers
         }
 
         /// <summary>
-        /// Delete an exsiting Franchise.
+        /// Delete an exsiting Franchise with given Id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
