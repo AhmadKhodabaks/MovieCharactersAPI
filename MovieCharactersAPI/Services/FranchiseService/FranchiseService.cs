@@ -37,7 +37,16 @@ namespace MovieCharactersAPI.Services.FranchiseService
         /// <returns></returns>
         public async Task DeleteEntityAsync(int id)
         {
-            var franchise = await _context.Franchises.FindAsync(id);
+            var franchise = await _context.Franchises.Include(fr => fr.Movies).Where(fr => fr.FranchiseId == id).FirstAsync();
+
+            //Setting FranchsieId to 0 for every movie in this Franchise before deleting it.
+            List<Movie> franchiseMovies = franchise.Movies.ToList();
+            foreach (Movie frMovie in franchiseMovies)
+            {
+                Movie movie = await _context.Movies.FindAsync(frMovie.MovieId);
+                movie.FranchiseId = null;
+            }
+
             _context.Franchises.Remove(franchise);
             await _context.SaveChangesAsync();
         }
@@ -126,6 +135,7 @@ namespace MovieCharactersAPI.Services.FranchiseService
                 .SelectMany(fr => fr.Movies)
                 .SelectMany(mv => mv.Characters)
                 .Include(ch => ch.Movies)
+                .Distinct()
                 .ToListAsync();
 
             return charactersInFranchise;

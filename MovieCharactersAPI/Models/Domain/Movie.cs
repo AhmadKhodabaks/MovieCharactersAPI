@@ -43,7 +43,7 @@ namespace MovieCharactersAPI.Models.Domain
         public string? TrailerURl { get; set; }
 
         //Foreign keys
-        public int FranchiseId { get; set; }
+        public int? FranchiseId { get; set; }//If null - the franchise was deleted.
 
         //Navigation properties
         public Franchise Franchise { get; set; }
