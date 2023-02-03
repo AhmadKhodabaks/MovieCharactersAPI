@@ -15,6 +15,9 @@ using MovieCharactersAPI.Services.FranchiseService;
 
 namespace MovieCharactersAPI.Controllers
 {
+    /// <summary>
+    /// Controller class for Franchises.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Produces("Application/json")]

@@ -15,6 +15,9 @@ using MovieCharactersAPI.Services.MovieService;
 
 namespace MovieCharactersAPI.Controllers
 {
+    /// <summary>
+    /// Controller class for Movies.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Produces("Application/json")]

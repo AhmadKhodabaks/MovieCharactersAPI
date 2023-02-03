@@ -17,6 +17,9 @@ using NuGet.Protocol;
 
 namespace MovieCharactersAPI.Controllers
 {
+    /// <summary>
+    /// Contoller class for Characters.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Produces("Application/json")]
