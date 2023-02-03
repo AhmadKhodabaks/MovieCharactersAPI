@@ -97,7 +97,7 @@ namespace MovieCharactersAPI.Services.CharacterService
         /// A method to update Movie list of a Character with given Id.
         /// </summary>
         /// <param name="id">Id to find correct Character</param>
-        /// <param name="movieIds">List of movie Ids to replace the old Movie Id list</param>
+        /// <param name="movieIds">List of movie Ids added to the old Movie Id list</param>
         /// <returns></returns>
         public async Task UpdateMovies(int id, List<int> movieIds)
         {

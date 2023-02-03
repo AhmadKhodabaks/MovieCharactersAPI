@@ -99,7 +99,7 @@ namespace MovieCharactersAPI.Services.FranchiseService
         /// A method to update Movie list of a Franchise with given Id.
         /// </summary>
         /// <param name="id">Id to find Franchise</param>
-        /// <param name="movieIds">List of movie Ids to replace the old Movie Id list</param>
+        /// <param name="movieIds">List of movie Ids added to the old Movie Id list</param>
         /// <returns></returns>
         public async Task UpdateMovies(int id, List<int> movieIds)
         {
