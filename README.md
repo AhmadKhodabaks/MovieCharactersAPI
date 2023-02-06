@@ -31,7 +31,7 @@
 <div align="center">
     <img src="https://cdn-icons-png.flaticon.com/512/8297/8297437.png" alt="Logo" width="80" height="80">
 
-<h3 align="center">MovieCharactersAPI</h3>
+<h3 align="center">Assignment 3: MovieCharactersAPI</h3>
 </div>
 
 
